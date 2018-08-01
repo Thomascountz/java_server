@@ -6,25 +6,20 @@ import java.net.Socket;
 public class ClientWorker implements Runnable {
 
     private Socket clientSocket;
-    private RequestRouter requestRouter;
     private ServerConfig serverConfig;
     private boolean logsRequests;
 
     ClientWorker(Socket clientSocket,
-                      RequestRouter requestRouter,
                       ServerConfig serverConfig,
                       boolean logsRequests){
         this.clientSocket = clientSocket;
-        this.requestRouter = requestRouter;
         this.serverConfig = serverConfig;
         this.logsRequests = logsRequests;
     }
 
     ClientWorker(Socket clientSocket,
-                 RequestRouter requestRouter,
                  ServerConfig serverConfig){
         this.clientSocket = clientSocket;
-        this.requestRouter = requestRouter;
         this.serverConfig = serverConfig;
         this.logsRequests = false;
     }
@@ -37,17 +32,18 @@ public class ClientWorker implements Runnable {
             String requestString = requestReader.getRequest();
 
             if (this.logsRequests) {
-                Logger logger = new Logger(serverConfig.getDirectory() + "/logs.txt");
+                Logger logger = new Logger("logs.txt");
                 logger.log(getFirstLine(requestString));
             }
 
-            RequestParser requestParser = new RequestParser(requestString, serverConfig.getDirectory());
+            RequestParser requestParser = new RequestParser(requestString);
             RequestParams requestParams = requestParser.getRequestParams();
-            ResponseBuilder responseBuilder = new ResponseBuilder(requestRouter);
 
-            byte[] response = responseBuilder.getResponse(requestParams);
+            byte[] response = "HTTP/1.1 200 OK\r\n\r\nHello, World!".getBytes();
 
-            sendResponse(clientSocket.getOutputStream(), response);
+            OutputStream outputStream = clientSocket.getOutputStream();
+            outputStream.write(response);
+            outputStream.close();
             clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,20 +55,4 @@ public class ClientWorker implements Runnable {
         return request.split("\r\n")[0].trim();
     }
 
-    private void sendResponse(OutputStream clientSocketOutputStream, byte[] response) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = null;
-        BufferedOutputStream bufferedOutputStream = null;
-        try {
-            byteArrayOutputStream = new ByteArrayOutputStream();
-            bufferedOutputStream = new BufferedOutputStream(clientSocketOutputStream);
-            byteArrayOutputStream.write(response);
-            byte[] result = byteArrayOutputStream.toByteArray();
-            bufferedOutputStream.write(result);
-            byteArrayOutputStream.flush();
-        }
-        finally {
-            byteArrayOutputStream.close();
-            bufferedOutputStream.close();
-        }
-    }
 }

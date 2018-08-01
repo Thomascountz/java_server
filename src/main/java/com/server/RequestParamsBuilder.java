@@ -7,7 +7,6 @@ public class RequestParamsBuilder {
     private String method;
     private Hashtable<String, String> queryComponent;
     private Hashtable<String, String> cookies;
-    private String directory;
     private Hashtable<String, Integer> range;
     private String bodyString;
     private int contentLength;
@@ -31,11 +30,6 @@ public class RequestParamsBuilder {
 
     public RequestParamsBuilder setCookies(Hashtable<String, String> cookies) {
         this.cookies = cookies;
-        return this;
-    }
-
-    public RequestParamsBuilder setDirectory(String s) {
-        this.directory = s;
         return this;
     }
 
@@ -65,7 +59,7 @@ public class RequestParamsBuilder {
     }
 
     public RequestParams build() {
-        return new RequestParams(path, method, queryComponent, cookies, directory, range, bodyString,
+        return new RequestParams(path, method, queryComponent, cookies, range, bodyString,
                                     contentLength, authorizationCredentials, ifMatch);
     }
 }

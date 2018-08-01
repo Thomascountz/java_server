@@ -8,9 +8,7 @@ public class HTTPServer {
 
         ServerConfig serverConfig = cliFlagParser.parse(args);
 
-        RequestRouter requestRouter = new RequestRouter();
-
-        HTTPServerManager HTTPServerManager = new HTTPServerManager(serverConfig, requestRouter, true);
+        HTTPServerManager HTTPServerManager = new HTTPServerManager(serverConfig,true);
 
         HTTPServerManager.runServer();
     }

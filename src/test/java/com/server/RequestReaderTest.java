@@ -29,7 +29,6 @@ public class RequestReaderTest {
         BufferedReader br = new BufferedReader(inputString);
 
         final RequestReader requestReader = new RequestReader(br);
-        final String requestString = "header\r\nContent-Length:4\r\n\r\nbody";
 
         assertEquals("header", requestReader.getRequest());
     }
@@ -41,7 +40,6 @@ public class RequestReaderTest {
         String file = resourcesDirectory.getAbsolutePath();
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String separator = "\r\n";
 
         final RequestReader requestReader = new RequestReader(bufferedReader);
 

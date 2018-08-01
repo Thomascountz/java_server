@@ -10,12 +10,10 @@ public class RequestParser {
 
     private String headerString;
     private RequestParams requestParams;
-    private String directory;
     private int contentLength;
 
-    RequestParser(String headerString, String directory) throws UnsupportedEncodingException {
+    RequestParser(String headerString) throws UnsupportedEncodingException {
         this.headerString = headerString;
-        this.directory = directory;
         this.contentLength = extractContentLength();
         buildRequestParams();
     }
@@ -24,7 +22,6 @@ public class RequestParser {
         requestParams = new RequestParamsBuilder()
                 .setPath(extractPath())
                 .setMethod(extractMethod())
-                .setDirectory(extractDirectory())
                 .setQueryComponent(extractQueryComponent())
                 .setCookies(extractCookies())
                 .setRange(extractRange())
@@ -33,10 +30,6 @@ public class RequestParser {
                 .setAuthorizationCredentials(extractAuthorizationCredentials())
                 .setIfMatch(extractIfMatch())
                 .build();
-    }
-
-    private String extractDirectory(){
-        return this.directory.trim();
     }
 
     private String extractMethod() {
@@ -67,7 +60,7 @@ public class RequestParser {
         int contentLength = 0;
         String targetString = "Content-Length";
         if (headerString.contains(targetString)){
-            String contentLine = extractLine(targetString, headerString);
+            String contentLine = extractLine(targetString);
             contentLine = contentLine.split(":")[1];
             contentLength = parseInt(contentLine.trim());
         } else {
@@ -99,7 +92,7 @@ public class RequestParser {
         String targetString = "Cookie: ";
         if (headerString.contains(targetString)) {
 
-            String cookieLine = extractLine(targetString, headerString);
+            String cookieLine = extractLine(targetString);
 
             cookieLine = cookieLine.replace("Cookie: ", "");
             String[] cookies = cookieLine.split("; ");
@@ -117,7 +110,7 @@ public class RequestParser {
         String targetString = "Range";
         if (headerString.contains(targetString)) {
 
-            String rangeLine = extractLine(targetString, headerString);
+            String rangeLine = extractLine(targetString);
 
             rangeLine = rangeLine.replace("Range: bytes=", "");
 
@@ -136,7 +129,7 @@ public class RequestParser {
         return rangeTable;
     }
 
-    private String extractLine(String targetString, String header) {
+    private String extractLine(String targetString) {
         String targetLine = "";
         String[] headerLines = headerString.split("\r\n");
         for (String headerLine : headerLines) {
@@ -150,16 +143,15 @@ public class RequestParser {
 
     private String extractAuthorizationCredentials() {
         String targetString = "Authorization: Basic";
-        String authorizationLine = extractLine(targetString, headerString);
-        String authorizationCredentials = authorizationLine.replace(targetString + " ", "");
-        return authorizationCredentials;
+        String authorizationLine = extractLine(targetString);
+        return authorizationLine.replace(targetString + " ", "");
     }
 
     private String extractIfMatch() {
         String ifMatch = "";
         String targetLine = "If-Match";
         if (headerString.contains("If-Match")) {
-            String ifMatchLine = extractLine(targetLine, headerString);
+            String ifMatchLine = extractLine(targetLine);
             ifMatch = ifMatchLine.replace("If-Match: ", "");
         }
         return ifMatch;

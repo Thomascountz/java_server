@@ -6,12 +6,10 @@ import java.io.*;
 public class HTTPServerManager {
 
     private ServerConfig serverConfig;
-    private RequestRouter requestRouter;
     private boolean logRequests;
 
-    HTTPServerManager(ServerConfig serverConfig, RequestRouter requestRouter, boolean logRequests){
+    HTTPServerManager(ServerConfig serverConfig, boolean logRequests){
         this.serverConfig = serverConfig;
-        this.requestRouter = requestRouter;
         this.logRequests = logRequests;
     }
 
@@ -21,7 +19,6 @@ public class HTTPServerManager {
             Socket clientSocket = openSocket(serverSocket);
             ClientWorker clientWorker = new ClientWorker(
                     clientSocket,
-                    requestRouter,
                     serverConfig,
                     logRequests
             );

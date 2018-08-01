@@ -60,3 +60,6 @@ fabric.properties
 src/.DS_Store
 src/test/.DS_Store
 src/test/resources/.DS_Store
+
+# Custom
+logs.txt

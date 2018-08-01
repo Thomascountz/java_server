@@ -6,7 +6,6 @@ import java.net.Socket;
 
 public class MockSocket extends Socket{
 
-    private ByteArrayInputStream incomingStream;
     private ByteArrayOutputStream outgoingStream;
     private String header = "GET / HTTP/1.1\r\n\r\n";
 
@@ -18,12 +17,7 @@ public class MockSocket extends Socket{
 
     public ByteArrayInputStream getInputStream(){
         ByteArrayInputStream is = new ByteArrayInputStream(this.header.getBytes());
-        incomingStream = is;
         return is;
-    }
-
-    public String getIncomingString(){
-        return incomingStream.toString();
     }
 
     public String getOutgoingString() {

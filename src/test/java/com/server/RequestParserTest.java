@@ -13,9 +13,8 @@ public class RequestParserTest {
     public void getVerbReturnsGetHTTPVerb() throws UnsupportedEncodingException {
 
         String headerString = "GET / HTTP/1.1";
-        String directory = "/foo";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         assertEquals("GET", requestParser.getRequestParams().getMethod());
     }
@@ -24,9 +23,8 @@ public class RequestParserTest {
     public void getVerbReturnsHTTPPostVerb() throws UnsupportedEncodingException {
 
         String headerString = "POST / HTTP/1.1";
-        String directory = "/foo";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         assertEquals("POST", requestParser.getRequestParams().getMethod());
     }
@@ -35,9 +33,8 @@ public class RequestParserTest {
     public void getRouteReturnsHTTPRoute() throws UnsupportedEncodingException {
 
         String headerString = "POST / HTTP/1.1";
-        String directory = "/foo";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         assertEquals("/", requestParser.getRequestParams().getPath());
     }
@@ -46,9 +43,8 @@ public class RequestParserTest {
     public void getRouteReturnsFormHTTPRoute() throws UnsupportedEncodingException {
 
         String headerString = "POST /form HTTP/1.1";
-        String directory = "/foo";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         assertEquals("/form", requestParser.getRequestParams().getPath());
     }
@@ -57,9 +53,8 @@ public class RequestParserTest {
     public void getRouteReturnsPathWithoutQueryComponent() throws UnsupportedEncodingException {
 
         String headerString = "GET /cookie?type=chocolate HTTP/1.1";
-        String directory = "/foo";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         assertEquals("/cookie", requestParser.getRequestParams().getPath());
     }
@@ -68,9 +63,8 @@ public class RequestParserTest {
     public void getQueryComponentReturnsAHashTableFromRequestURI() throws UnsupportedEncodingException {
 
         String headerString = "GET /cookie?type=chocolate&foo=bar HTTP/1.1";
-        String directory = "/foo";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         Hashtable result = requestParser.getRequestParams().getQueryComponent();
 
@@ -82,9 +76,8 @@ public class RequestParserTest {
     public void getQueryComponentReturnsADecodedHashTableFromRequestURI() throws UnsupportedEncodingException {
 
         String headerString = "GET /cookie?foo=%3D%40%23%24%25%5E HTTP/1.1";
-        String directory = "/foo";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         Hashtable result = requestParser.getRequestParams().getQueryComponent();
 
@@ -95,9 +88,8 @@ public class RequestParserTest {
     public void getQueryComponentReturnsAnEmptyHashTableIfNoQueriesAreInURI() throws UnsupportedEncodingException {
 
         String headerString = "GET / HTTP/1.1";
-        String directory = "/foo";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         Hashtable result = requestParser.getRequestParams().getQueryComponent();
 
@@ -108,9 +100,8 @@ public class RequestParserTest {
     public void getCookiesReturnsAHashTableFromRequestHeaders() throws UnsupportedEncodingException {
 
         String headerString = "GET /cookie HTTP/1.1\r\nCookie: type=chocolate\r\n\r\n";
-        String directory = "/foo";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         Hashtable result = requestParser.getRequestParams().getCookies();
 
@@ -121,9 +112,8 @@ public class RequestParserTest {
     public void getCookieReturnsAnEmptyHashTableIfNoCookiesInRequestHeaders() throws UnsupportedEncodingException {
 
         String headerString = "GET /cookie?type=chocolate&foo=bar HTTP/1.1";
-        String directory = "/foo";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         Hashtable result = requestParser.getRequestParams().getCookies();
 
@@ -132,10 +122,9 @@ public class RequestParserTest {
 
     @Test
     public void requestParamsReturnsRequestParamsWithRangeTable() throws UnsupportedEncodingException {
-        String directory = "/public";
         String headerString = "GET /foo HTTP/1.1\r\nRange: bytes=1-2\r\n";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         Hashtable result = requestParser.getRequestParams().getRange();
 
@@ -146,10 +135,9 @@ public class RequestParserTest {
 
     @Test
     public void requestParamsReturnsRequestParamsWithDefaultStartRangeTable() throws UnsupportedEncodingException {
-        String directory = "/public";
         String headerString = "GET /foo HTTP/1.1\r\nRange: bytes=-2\r\n";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         Hashtable result = requestParser.getRequestParams().getRange();
 
@@ -160,10 +148,9 @@ public class RequestParserTest {
 
     @Test
     public void requestParamsReturnsRequestParamsWithDefaultEndRangeTable() throws UnsupportedEncodingException {
-        String directory = "/public";
         String headerString = "GET /foo HTTP/1.1\r\nRange: bytes=2-\r\n";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         Hashtable result = requestParser.getRequestParams().getRange();
 
@@ -174,10 +161,9 @@ public class RequestParserTest {
 
     @Test
     public void requestParamsReturnsRequestParamsWithEmptyRangeTable() throws UnsupportedEncodingException {
-        String directory = "/public";
         String headerString = "GET /foo HTTP/1.1\r\n\r\n";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         Hashtable result = requestParser.getRequestParams().getRange();
 
@@ -186,20 +172,18 @@ public class RequestParserTest {
 
     @Test
     public void getContentLengthReturnsContentLengthOfBody() throws UnsupportedEncodingException{
-        String directory = "/public";
         String headerString = "GET /foo HTTP/1.1\r\nContent-Length:4\r\n\r\nbody";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         assertEquals(4, requestParser.getRequestParams().getContentLength());
     }
 
     @Test
     public void getBodyReturnsTheRequestBodyAsAString() throws UnsupportedEncodingException{
-        String directory = "/public";
         String headerString = "GET /foo HTTP/1.1\r\nContent-Length:4\r\n\r\nbody";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         assertEquals("body", requestParser.getRequestParams().getBody());
     }
@@ -207,8 +191,7 @@ public class RequestParserTest {
     @Test
     public void getAuthorizationCredentialsReturnsExpectedString() throws UnsupportedEncodingException {
         String headerString = "GET /logs HTTP/1.1\r\nAuthorization: Basic AWDVyM==\r\n";
-        String directory = "/foo";
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
         String result = requestParser.getRequestParams().getAuthorizationCredentials();
 
         assertEquals("AWDVyM==", result);
@@ -216,10 +199,9 @@ public class RequestParserTest {
 
     @Test
     public void requestParamsReturnsIfMatchFromHeader() throws UnsupportedEncodingException {
-        String directory = "/public";
         String headerString = "GET /foo HTTP/1.1\r\nIf-Match: foobar12345";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         String result = requestParser.getRequestParams().getIfMatch();
 
@@ -228,10 +210,9 @@ public class RequestParserTest {
 
     @Test
     public void requestParamsReturnsIfMatchAsEmptyString() throws UnsupportedEncodingException {
-        String directory = "/public";
         String headerString = "GET /foo HTTP/1.1\r\n\r\n";
 
-        RequestParser requestParser = new RequestParser(headerString, directory);
+        RequestParser requestParser = new RequestParser(headerString);
 
         String result = requestParser.getRequestParams().getIfMatch();
 
