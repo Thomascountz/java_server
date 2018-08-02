@@ -12,12 +12,12 @@ public class HTTPServer {
     private ServerConfig serverConfig;
     private ILogger logger;
 
-    HTTPServer(ILogger logger, int port){
+    public HTTPServer(ILogger logger, int port){
         this.serverConfig = new ServerConfig(port);
         this.logger = logger;
     }
 
-    HTTPServer(int port){
+    public HTTPServer(int port){
         this.serverConfig = new ServerConfig(port);
         this.logger = new NullLogger();
     }
