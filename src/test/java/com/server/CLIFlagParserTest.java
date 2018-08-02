@@ -13,9 +13,9 @@ public class CLIFlagParserTest {
         String[] args = {"-p", "5000"};
 
         final CLIFlagParser parser = new CLIFlagParser();
-        final ServerConfig serverConfig = parser.parse(args);
+        final int portNumber = parser.parse(args);
 
-        assertEquals(5000, serverConfig.getPortNumber());
+        assertEquals(5000, portNumber);
     }
 
     @Test(expected = IOException.class)

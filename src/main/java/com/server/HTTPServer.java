@@ -1,20 +1,33 @@
 package com.server;
 
 import com.server.loggers.ILogger;
-import com.server.loggers.Logger;
+import com.server.loggers.NullLogger;
+
+import java.net.*;
+import java.io.*;
 
 public class HTTPServer {
 
-    public static void main(String[] args) throws Exception {
+    private ServerConfig serverConfig;
+    private ILogger logger;
 
-        CLIFlagParser cliFlagParser = new CLIFlagParser();
+    HTTPServer(ILogger logger, int port){
+        this.serverConfig = new ServerConfig(port);
+        this.logger = logger;
+    }
 
-        ServerConfig serverConfig = cliFlagParser.parse(args);
+    HTTPServer(int port){
+        this.serverConfig = new ServerConfig(port);
+        this.logger = new NullLogger();
+    }
 
-        ILogger logger = new Logger("logs.txt");
-
-        HTTPServerManager HTTPServerManager = new HTTPServerManager(serverConfig, logger);
-
-        HTTPServerManager.runServer();
+    public void runServer() throws IOException {
+        ServerSocket serverSocket = new ServerSocket(serverConfig.getPortNumber());
+        while(true) {
+            Socket clientSocket = serverSocket.accept();
+            ClientWorker clientWorker = new ClientWorker(clientSocket, logger);
+            Thread thread = new Thread(clientWorker);
+            thread.start();
+        }
     }
 }

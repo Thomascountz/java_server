@@ -30,7 +30,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.server.HTTPServer</mainClass>
+                            <mainClass>com.server.CLIHTTPServerRunner</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

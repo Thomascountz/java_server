@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class CLIFlagParser {
 
-    public ServerConfig parse(String[] args) throws IOException {
+    public int parse(String[] args) throws IOException {
         int portNumber;
 
         try{
@@ -16,6 +16,6 @@ public class CLIFlagParser {
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new IOException();
         }
-        return new ServerConfig(portNumber);
+        return  portNumber;
     }
 }
