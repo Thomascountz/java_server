@@ -8,14 +8,11 @@ import java.net.Socket;
 public class ClientWorker implements Runnable {
 
     private Socket clientSocket;
-    private ServerConfig serverConfig;
     private ILogger logger;
 
     ClientWorker(Socket clientSocket,
-                 ServerConfig serverConfig,
                  ILogger logger){
         this.clientSocket = clientSocket;
-        this.serverConfig = serverConfig;
         this.logger = logger;
     }
 

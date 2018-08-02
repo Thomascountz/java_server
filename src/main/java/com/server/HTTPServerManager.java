@@ -22,28 +22,12 @@ public class HTTPServerManager {
     }
 
     public void runServer() throws IOException {
-        ServerSocket serverSocket = createServerSocket();
-        while(running()) {
-            Socket clientSocket = openSocket(serverSocket);
-            ClientWorker clientWorker = new ClientWorker(
-                    clientSocket,
-                    serverConfig,
-                    logger
-            );
+        ServerSocket serverSocket = new ServerSocket(serverConfig.getPortNumber());
+        while(true) {
+            Socket clientSocket = serverSocket.accept();
+            ClientWorker clientWorker = new ClientWorker(clientSocket, logger);
             Thread thread = new Thread(clientWorker);
             thread.start();
         }
-    }
-
-    private Boolean running(){
-        return true;
-    }
-
-    private ServerSocket createServerSocket() throws IOException {
-        return new ServerSocket(serverConfig.getPortNumber());
-    }
-
-    private Socket openSocket(ServerSocket serverSocket) throws IOException {
-        return serverSocket.accept();
     }
 }

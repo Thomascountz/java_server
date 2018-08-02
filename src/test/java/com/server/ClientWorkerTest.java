@@ -18,7 +18,7 @@ public class ClientWorkerTest {
 
         clientSocket.setRequestHeader("GET", "/");
 
-        ClientWorker clientWorker = new ClientWorker(clientSocket, serverConfig, new NullLogger());
+        ClientWorker clientWorker = new ClientWorker(clientSocket, new NullLogger());
 
         clientWorker.run();
 
