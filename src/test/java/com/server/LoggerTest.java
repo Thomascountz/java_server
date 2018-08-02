@@ -1,5 +1,6 @@
 package com.server;
 
+import com.server.loggers.Logger;
 import org.junit.Test;
 
 import java.io.BufferedWriter;

@@ -1,5 +1,7 @@
 package com.server;
 
+import com.server.loggers.ILogger;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -7,23 +9,15 @@ public class ClientWorker implements Runnable {
 
     private Socket clientSocket;
     private ServerConfig serverConfig;
-    private boolean logsRequests;
+    private ILogger logger;
 
     ClientWorker(Socket clientSocket,
-                      ServerConfig serverConfig,
-                      boolean logsRequests){
+                 ServerConfig serverConfig,
+                 ILogger logger){
         this.clientSocket = clientSocket;
         this.serverConfig = serverConfig;
-        this.logsRequests = logsRequests;
+        this.logger = logger;
     }
-
-    ClientWorker(Socket clientSocket,
-                 ServerConfig serverConfig){
-        this.clientSocket = clientSocket;
-        this.serverConfig = serverConfig;
-        this.logsRequests = false;
-    }
-
 
     public void run() {
         try {
@@ -31,10 +25,7 @@ public class ClientWorker implements Runnable {
             RequestReader requestReader = new RequestReader(bufferedReader);
             String requestString = requestReader.getRequest();
 
-            if (this.logsRequests) {
-                Logger logger = new Logger("logs.txt");
-                logger.log(getFirstLine(requestString));
-            }
+            logger.log(getFirstLine(requestString));
 
             RequestParser requestParser = new RequestParser(requestString);
             RequestParams requestParams = requestParser.getRequestParams();

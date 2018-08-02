@@ -1,16 +1,24 @@
 package com.server;
 
+import com.server.loggers.ILogger;
+import com.server.loggers.NullLogger;
+
 import java.net.*;
 import java.io.*;
 
 public class HTTPServerManager {
 
     private ServerConfig serverConfig;
-    private boolean logRequests;
+    private ILogger logger;
 
-    HTTPServerManager(ServerConfig serverConfig, boolean logRequests){
+    HTTPServerManager(ServerConfig serverConfig, ILogger logger){
         this.serverConfig = serverConfig;
-        this.logRequests = logRequests;
+        this.logger = logger;
+    }
+
+    HTTPServerManager(ServerConfig serverConfig){
+        this.serverConfig = serverConfig;
+        this.logger = new NullLogger();
     }
 
     public void runServer() throws IOException {
@@ -20,7 +28,7 @@ public class HTTPServerManager {
             ClientWorker clientWorker = new ClientWorker(
                     clientSocket,
                     serverConfig,
-                    logRequests
+                    logger
             );
             Thread thread = new Thread(clientWorker);
             thread.start();
