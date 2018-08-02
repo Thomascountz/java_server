@@ -1,2 +1,2 @@
 test record
-new record
+2018-08-02T15:17:14.585Z -- new record

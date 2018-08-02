@@ -11,7 +11,7 @@ public class HTTPServer {
 
         ServerConfig serverConfig = cliFlagParser.parse(args);
 
-        ILogger logger = new Logger("/logs.txt");
+        ILogger logger = new Logger("logs.txt");
 
         HTTPServerManager HTTPServerManager = new HTTPServerManager(serverConfig, logger);
 

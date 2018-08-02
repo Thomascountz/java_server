@@ -3,6 +3,7 @@ package com.server.loggers;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Instant;
 
 public class Logger implements ILogger {
     private String logFilePath;
@@ -15,7 +16,10 @@ public class Logger implements ILogger {
     public void log(String request) {
         BufferedWriter writer = null;
         try {
+            String timeStamp = Instant.now().toString();
             writer = new BufferedWriter(new FileWriter(this.logFilePath, true));
+            writer.append(timeStamp);
+            writer.append(" -- ");
             writer.append(request);
             writer.append("\r\n");
             writer.close();
