@@ -1,4 +1,4 @@
-package http.server.applications;
+package http.application;
 
 import http.server.RequestParams;
 

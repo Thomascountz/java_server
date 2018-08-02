@@ -1,7 +1,7 @@
 package http.server;
 
-import http.server.applications.DefaultApplication;
-import http.server.applications.IApplication;
+import http.application.DefaultApplication;
+import http.application.IApplication;
 import http.server.loggers.NullLogger;
 import http.server.mocks.MockSocket;
 import org.junit.Test;

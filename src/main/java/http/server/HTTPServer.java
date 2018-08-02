@@ -1,6 +1,6 @@
 package http.server;
 
-import http.server.applications.IApplication;
+import http.application.IApplication;
 import http.server.loggers.ILogger;
 import http.server.loggers.NullLogger;
 

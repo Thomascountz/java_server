@@ -1,6 +1,6 @@
 package http.server;
 
-import http.server.applications.DefaultApplication;
+import http.application.DefaultApplication;
 import http.server.loggers.ILogger;
 import http.server.loggers.Logger;
 
