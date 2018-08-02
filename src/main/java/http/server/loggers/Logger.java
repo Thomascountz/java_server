@@ -1,4 +1,4 @@
-package com.server.loggers;
+package http.server.loggers;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

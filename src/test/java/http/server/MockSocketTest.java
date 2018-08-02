@@ -1,6 +1,6 @@
-package com.server;
+package http.server;
 
-import com.server.mocks.MockSocket;
+import http.server.mocks.MockSocket;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;

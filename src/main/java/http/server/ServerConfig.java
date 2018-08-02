@@ -1,4 +1,4 @@
-package com.server;
+package http.server;
 
 public class ServerConfig {
 

@@ -1,7 +1,9 @@
-package com.server;
+package http.server;
 
-import com.server.loggers.NullLogger;
-import com.server.mocks.MockSocket;
+import http.server.applications.DefaultApplication;
+import http.server.applications.IApplication;
+import http.server.loggers.NullLogger;
+import http.server.mocks.MockSocket;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,11 +16,11 @@ public class ClientWorkerTest {
         MockSocket clientSocket = new MockSocket();
         clientSocket.getOutputStream();
 
-        ServerConfig serverConfig = new ServerConfig(5000);
-
         clientSocket.setRequestHeader("GET", "/");
 
-        ClientWorker clientWorker = new ClientWorker(clientSocket, new NullLogger());
+        IApplication application = new DefaultApplication();
+
+        ClientWorker clientWorker = new ClientWorker(application, clientSocket, new NullLogger());
 
         clientWorker.run();
 

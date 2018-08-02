@@ -1,7 +1,8 @@
-package com.server;
+package http.server;
 
-import com.server.loggers.ILogger;
-import com.server.loggers.Logger;
+import http.server.applications.DefaultApplication;
+import http.server.loggers.ILogger;
+import http.server.loggers.Logger;
 
 public class HTTPServerRunner {
 
@@ -15,6 +16,8 @@ public class HTTPServerRunner {
 
         HTTPServer HTTPServer = new HTTPServer(logger, portNumber);
 
-        HTTPServer.runServer();
+        DefaultApplication defaultApplication = new DefaultApplication();
+
+        HTTPServer.runServer(defaultApplication);
     }
 }

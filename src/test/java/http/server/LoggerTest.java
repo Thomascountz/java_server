@@ -1,6 +1,6 @@
-package com.server;
+package http.server;
 
-import com.server.loggers.Logger;
+import http.server.loggers.Logger;
 import org.junit.Test;
 
 import java.io.BufferedWriter;

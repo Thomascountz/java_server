@@ -1,6 +1,7 @@
-package com.server;
+package http.server;
 
-import com.server.loggers.ILogger;
+import http.server.applications.IApplication;
+import http.server.loggers.ILogger;
 
 import java.io.*;
 import java.net.Socket;
@@ -9,11 +10,14 @@ public class ClientWorker implements Runnable {
 
     private Socket clientSocket;
     private ILogger logger;
+    private IApplication application;
 
-    ClientWorker(Socket clientSocket,
+    ClientWorker(IApplication application,
+                 Socket clientSocket,
                  ILogger logger){
         this.clientSocket = clientSocket;
         this.logger = logger;
+        this.application = application;
     }
 
     public void run() {
@@ -27,7 +31,7 @@ public class ClientWorker implements Runnable {
             RequestParser requestParser = new RequestParser(requestString);
             RequestParams requestParams = requestParser.getRequestParams();
 
-            byte[] response = "HTTP/1.1 200 OK\r\n\r\nHello, World!".getBytes();
+            byte[] response = application.apply(requestParams);
 
             OutputStream outputStream = clientSocket.getOutputStream();
             outputStream.write(response);

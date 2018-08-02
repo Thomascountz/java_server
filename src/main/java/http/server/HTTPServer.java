@@ -1,7 +1,8 @@
-package com.server;
+package http.server;
 
-import com.server.loggers.ILogger;
-import com.server.loggers.NullLogger;
+import http.server.applications.IApplication;
+import http.server.loggers.ILogger;
+import http.server.loggers.NullLogger;
 
 import java.net.*;
 import java.io.*;
@@ -21,11 +22,11 @@ public class HTTPServer {
         this.logger = new NullLogger();
     }
 
-    public void runServer() throws IOException {
+    public void runServer(IApplication application) throws IOException {
         ServerSocket serverSocket = new ServerSocket(serverConfig.getPortNumber());
         while(true) {
             Socket clientSocket = serverSocket.accept();
-            ClientWorker clientWorker = new ClientWorker(clientSocket, logger);
+            ClientWorker clientWorker = new ClientWorker(application, clientSocket, logger);
             Thread thread = new Thread(clientWorker);
             thread.start();
         }

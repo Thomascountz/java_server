@@ -1,6 +1,8 @@
-package com.server;
+package http.server.applications;
 
-public class Application implements IApplication{
+import http.server.RequestParams;
+
+public class DefaultApplication implements IApplication{
 
     public byte[] apply(RequestParams requestParams){
         return "HTTP/1.1 200 OK\r\n\r\nHello, World!".getBytes();
