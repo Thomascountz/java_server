@@ -25,6 +25,10 @@ public class LoggerTest {
 
         File newFile = new File(filePath);
         assertTrue(newFile.exists());
+
+        BufferedWriter newWriter = new BufferedWriter(new FileWriter(filePath, true));
+        newWriter.write("");
+        newWriter.close();
     }
 
     @Test
@@ -48,6 +52,10 @@ public class LoggerTest {
 
         assertTrue(content.contains("test record"));
         assertTrue(content.contains("new record"));
+
+        BufferedWriter newWriter = new BufferedWriter(new FileWriter(filePath, true));
+        newWriter.write("");
+        newWriter.close();
     }
 
 }
