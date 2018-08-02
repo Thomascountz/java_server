@@ -3,7 +3,7 @@ package com.server;
 import com.server.loggers.ILogger;
 import com.server.loggers.Logger;
 
-public class CLIHTTPServerRunner {
+public class HTTPServerRunner {
 
     public static void main(String[] args) throws Exception {
 
