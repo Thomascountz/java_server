@@ -1,6 +1,6 @@
 package http.server;
 
-import http.application.IApplication;
+import http.application.Application;
 import http.server.loggers.ILogger;
 
 import java.io.*;
@@ -10,9 +10,9 @@ public class ClientWorker implements Runnable {
 
     private Socket clientSocket;
     private ILogger logger;
-    private IApplication application;
+    private Application application;
 
-    ClientWorker(IApplication application,
+    ClientWorker(Application application,
                  Socket clientSocket,
                  ILogger logger){
         this.clientSocket = clientSocket;

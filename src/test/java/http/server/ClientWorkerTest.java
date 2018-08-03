@@ -1,7 +1,7 @@
 package http.server;
 
+import http.application.Application;
 import http.application.DefaultApplication;
-import http.application.IApplication;
 import http.server.loggers.NullLogger;
 import http.server.mocks.MockSocket;
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class ClientWorkerTest {
 
         clientSocket.setRequestHeader("GET", "/");
 
-        IApplication application = new DefaultApplication();
+        Application application = new DefaultApplication();
 
         ClientWorker clientWorker = new ClientWorker(application, clientSocket, new NullLogger());
 

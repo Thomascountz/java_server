@@ -1,6 +1,6 @@
 package http.server;
 
-import http.application.IApplication;
+import http.application.Application;
 import http.server.loggers.ILogger;
 import http.server.loggers.NullLogger;
 
@@ -22,7 +22,7 @@ public class HTTPServer {
         this.logger = new NullLogger();
     }
 
-    public void runServer(IApplication application) throws IOException {
+    public void runServer(Application application) throws IOException {
         ServerSocket serverSocket = new ServerSocket(serverConfig.getPortNumber());
         while(true) {
             Socket clientSocket = serverSocket.accept();
