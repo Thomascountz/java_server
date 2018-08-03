@@ -1,4 +1,4 @@
-package http.server;
+package http.server.mocks;
 
 import http.server.mocks.MockSocket;
 import org.junit.Test;

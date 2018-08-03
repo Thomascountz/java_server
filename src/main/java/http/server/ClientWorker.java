@@ -31,7 +31,7 @@ public class ClientWorker implements Runnable {
             RequestParser requestParser = new RequestParser(requestString);
             RequestParams requestParams = requestParser.getRequestParams();
 
-            byte[] response = application.apply(requestParams);
+            byte[] response = application.apply(requestParams).getBytes();
 
             OutputStream outputStream = clientSocket.getOutputStream();
             outputStream.write(response);
