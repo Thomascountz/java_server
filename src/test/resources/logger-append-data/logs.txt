@@ -1,2 +1,0 @@
-test record
-2018-08-03T13:04:47.609Z -- new record

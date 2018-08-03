@@ -3,10 +3,7 @@ package http.server;
 import http.server.loggers.Logger;
 import org.junit.Test;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 
 import static org.junit.Assert.*;
@@ -26,8 +23,8 @@ public class LoggerTest {
         File newFile = new File(filePath);
         assertTrue(newFile.exists());
 
-        BufferedWriter newWriter = new BufferedWriter(new FileWriter(filePath, true));
-        newWriter.write("");
+        PrintWriter newWriter = new PrintWriter(newFile);
+        newWriter.print("");
         newWriter.close();
     }
 
@@ -53,8 +50,8 @@ public class LoggerTest {
         assertTrue(content.contains("test record"));
         assertTrue(content.contains("new record"));
 
-        BufferedWriter newWriter = new BufferedWriter(new FileWriter(filePath, true));
-        newWriter.write("");
+        PrintWriter newWriter = new PrintWriter(logFile);
+        newWriter.print("");
         newWriter.close();
     }
 
