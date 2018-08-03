@@ -2,10 +2,11 @@ package http.server.mocks;
 
 import http.application.Application;
 import http.server.RequestParams;
+import http.server.Response;
 
 public class MockApplication extends Application {
 
-    public String apply(RequestParams requestParams){
-        return "HTTP/1.1 200 OK";
+    public Response apply(RequestParams requestParams){
+        return new Response(200, "");
     }
 }

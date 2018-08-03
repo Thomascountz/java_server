@@ -13,7 +13,7 @@ public class MockApplicationTest {
     public void applyReturns200OKStatusLineResponseHeader(){
         Application application = new MockApplication();
         RequestParams requestParams = new RequestParamsBuilder().setMethod("GET").setPath("/").build();
-        String result = application.apply(requestParams);
+        String result = new String(application.apply(requestParams).getReponse());
         assertEquals("HTTP/1.1 200 OK", result);
     }
 

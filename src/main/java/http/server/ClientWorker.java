@@ -31,10 +31,11 @@ public class ClientWorker implements Runnable {
             RequestParser requestParser = new RequestParser(requestString);
             RequestParams requestParams = requestParser.getRequestParams();
 
-            byte[] response = application.apply(requestParams).getBytes();
+            Response response  = application.apply(requestParams);
+            byte[] responsePacket = response.getReponse();
 
             OutputStream outputStream = clientSocket.getOutputStream();
-            outputStream.write(response);
+            outputStream.write(responsePacket);
             outputStream.close();
             clientSocket.close();
         } catch (IOException e) {

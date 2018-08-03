@@ -11,7 +11,7 @@ public class DefaultApplicationTest {
     @Test
     public void responseReturns404NotFoundByDefault() {
         Application application = new DefaultApplication();
-        String result = application.response();
+        String result = new String(application.response().getReponse());
         assertTrue(result.contains("404"));
     }
 
@@ -20,7 +20,7 @@ public class DefaultApplicationTest {
         RequestParams requestParams = new RequestParamsBuilder().setPath("/").setMethod("GET").build();
         Application application = new DefaultApplication();
         application.apply(requestParams);
-        String result = application.response();
+        String result = new String(application.response().getReponse());
         assertTrue(result.contains("200"));
 
     }
